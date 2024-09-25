@@ -1,4 +1,5 @@
 package com.jb.proyectoandroid;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,60 +17,59 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class Register extends AppCompatActivity {
     TextInputEditText editTextEmail, editTextPassword;
-    Button signIn;
-    TextView signUp;
+    Button signUp;
+    TextView signIn;
     FirebaseAuth auth = FirebaseAuth.getInstance();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_register);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
         signIn = findViewById(R.id.sign_in);
         signUp = findViewById(R.id.sign_up);
-        signUp.setOnClickListener(new View.OnClickListener() {
+        signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Register.class);
+                Intent intent = new Intent(Register.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        signIn.setOnClickListener(new View.OnClickListener() {
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email, password;
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(MainActivity.this, "Escriba su correo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, "Escriba su correo", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(TextUtils.isEmpty(password)){
-                    Toast.makeText(MainActivity.this, "Escriba su contraseña", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, "Escriba su contraseña", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                auth.signInWithEmailAndPassword(email,password)
+                auth.createUserWithEmailAndPassword(email,password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(MainActivity.this, "Inicio exitoso", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(MainActivity.this, HomePage.class);
+                                    Toast.makeText(Register.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(Register.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    Toast.makeText(MainActivity.this, "Autenticación fallida", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Register.this, "Autenticación fallida", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
+
             }
         });
-
     }
-        
-
 }
