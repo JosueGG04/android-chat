@@ -16,6 +16,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 import com.jb.proyectoandroid.adapter.SearchUserRecyclerAdapter;
 import com.jb.proyectoandroid.model.UserModel;
+import com.jb.proyectoandroid.utils.FirebaseUtil;
 
 public class NewChatSearchActivity extends AppCompatActivity {
 
@@ -61,7 +62,7 @@ public class NewChatSearchActivity extends AppCompatActivity {
 
     private void setupSearchRecyclerView(String searchTerm) {
 
-        Query query = FirebaseUtils.allUserCollectionReference()
+        Query query = FirebaseUtil.allUserCollectionReference()
                 .whereGreaterThanOrEqualTo("email",searchTerm).whereLessThanOrEqualTo("email", searchTerm + "\uf8ff");
 
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>()

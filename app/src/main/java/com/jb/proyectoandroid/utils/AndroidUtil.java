@@ -9,4 +9,11 @@ public class AndroidUtil {
         intent.putExtra("email",model.getEmail());
         intent.putExtra("userId",model.getUserID());
     }
+
+    public static UserModel getUserModelFromIntent(Intent intent){
+        UserModel userModel = new UserModel();
+        userModel.setEmail(intent.getStringExtra("email"));
+        userModel.setUserID(intent.getStringExtra("userId"));
+        return userModel;
+    }
 }

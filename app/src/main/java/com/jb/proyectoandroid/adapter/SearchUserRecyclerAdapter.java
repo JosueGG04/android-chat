@@ -1,6 +1,7 @@
 package com.jb.proyectoandroid.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.jb.proyectoandroid.FirebaseUtils;
+import com.jb.proyectoandroid.ChatActivity;
+import com.jb.proyectoandroid.utils.AndroidUtil;
+import com.jb.proyectoandroid.utils.FirebaseUtil;
 import com.jb.proyectoandroid.R;
 import com.jb.proyectoandroid.model.UserModel;
 
@@ -26,12 +29,16 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
     @Override
     protected void onBindViewHolder(@NonNull UserModelViewHolder holder, int position, @NonNull UserModel model) {
         holder.emailText.setText(model.getEmail());
-        if(model.getUserID().equals(FirebaseUtils.currentUserId())){
-            holder.emailText.setText(model.getEmail() + " (Me)");
+        if(model.getUserID().equals(FirebaseUtil.currentUserId())){
+            holder.emailText.setText(model.getEmail() + " (Yo)");
         }
 
         holder.itemView.setOnClickListener(v -> {
-            //ir al chat
+            //go to chat activity
+            Intent intent = new Intent(context, ChatActivity.class);
+            AndroidUtil.passUserModelAsIntent(intent,model);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
     }
 

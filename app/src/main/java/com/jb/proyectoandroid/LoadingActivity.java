@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.jb.proyectoandroid.utils.FirebaseUtil;
+
 public class LoadingActivity extends AppCompatActivity {
 
     @Override
@@ -16,7 +18,7 @@ public class LoadingActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(FirebaseUtils.isLoggedIn()){
+                if(FirebaseUtil.isLoggedIn()){
                     startActivity(new Intent(LoadingActivity.this,HomePage.class));
                 } else{
                     startActivity(new Intent(LoadingActivity.this,MainActivity.class));
