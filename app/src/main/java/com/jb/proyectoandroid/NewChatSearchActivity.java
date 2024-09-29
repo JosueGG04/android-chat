@@ -9,7 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.Query;
+import com.jb.proyectoandroid.adapter.SearchUserRecyclerAdapter;
+import com.jb.proyectoandroid.model.UserModel;
 
 public class NewChatSearchActivity extends AppCompatActivity {
 
@@ -18,7 +24,7 @@ public class NewChatSearchActivity extends AppCompatActivity {
     ImageButton backButton;
     RecyclerView recyclerView;
 
-
+    SearchUserRecyclerAdapter adapter;
 
 
     @Override
@@ -55,5 +61,35 @@ public class NewChatSearchActivity extends AppCompatActivity {
 
     private void setupSearchRecyclerView(String searchTerm) {
 
+        Query query = FirebaseUtils.allUserCollectionReference()
+                .whereGreaterThanOrEqualTo("email",searchTerm);
+
+        FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>()
+                .setQuery(query, UserModel.class).build();
+        adapter = new SearchUserRecyclerAdapter(options,getApplicationContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(adapter!=null)
+            adapter.startListening();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(adapter!=null)
+            adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(adapter!=null)
+            adapter.stopListening();
     }
 }

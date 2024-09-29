@@ -93,6 +93,7 @@ public class Register extends AppCompatActivity {
         // Crear un mapa de los datos del usuario
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("email", email);
+        userMap.put("userID", userId);
 
         // Guardar los datos en la colección "users" con el userId como documento
         db.collection("users").document(userId)
