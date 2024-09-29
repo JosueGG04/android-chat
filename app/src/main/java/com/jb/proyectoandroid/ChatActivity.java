@@ -21,7 +21,6 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
 import com.jb.proyectoandroid.adapter.ChatRecyclerAdapter;
-import com.jb.proyectoandroid.adapter.SearchUserRecyclerAdapter;
 import com.jb.proyectoandroid.model.ChatMessageModel;
 import com.jb.proyectoandroid.model.ChatroomModel;
 import com.jb.proyectoandroid.model.UserModel;
