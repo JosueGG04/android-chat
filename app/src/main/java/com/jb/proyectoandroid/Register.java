@@ -17,11 +17,19 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Register extends AppCompatActivity {
     TextInputEditText editTextEmail, editTextPassword;
     Button signUp;
     TextView signIn;
     FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,12 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    //Para guardar usuario en FireStore
+                                    FirebaseUser user = auth.getCurrentUser();
+                                    if (user != null) {
+                                        saveUserToFirestore(user.getUid(), email);
+                                    }
+                                    //Original
                                     Toast.makeText(Register.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(Register.this, MainActivity.class);
                                     startActivity(intent);
@@ -67,9 +81,22 @@ public class Register extends AppCompatActivity {
                                     Toast.makeText(Register.this, "Autenticación fallida", Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                         });
 
             }
         });
+    }
+
+
+    private void saveUserToFirestore(String userId, String email){
+        // Crear un mapa de los datos del usuario
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("email", email);
+        userMap.put("userID", userId);
+
+        // Guardar los datos en la colección "users" con el userId como documento
+        db.collection("users").document(userId)
+                .set(userMap);
     }
 }
