@@ -54,13 +54,13 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
-
+    implementation("com.google.firebase:firebase-storage")
 
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
 
-
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
 }
