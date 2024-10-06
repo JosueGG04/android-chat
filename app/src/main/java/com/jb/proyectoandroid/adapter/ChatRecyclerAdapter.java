@@ -5,11 +5,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,7 +57,15 @@ public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageMod
         holder.messageTimestamp.setText(formattedTime);
         //message
         holder.messageText.setText(model.getMessage());
+        //image
+        if(model.getImagePath()!=null) {
+            holder.imageVw.setVisibility(View.VISIBLE);
+            Glide.with(context).load(model.getImagePath()).into(holder.imageVw);
+        }
     }
+
+
+
 
     @NonNull
     @Override
@@ -66,12 +76,14 @@ public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageMod
 
     class ChatModelViewHolder extends RecyclerView.ViewHolder {
         TextView messageText,messageTimestamp,messageEmail;
+        ImageView imageVw;
 
         public ChatModelViewHolder(@NonNull View itemView) {
             super(itemView);
             messageText = itemView.findViewById(R.id.message_text);
             messageTimestamp = itemView.findViewById(R.id.message_timestamp);
             messageEmail = itemView.findViewById(R.id.message_email);
+            imageVw = itemView.findViewById(R.id.imgVw_message);
         }
     }
 }
