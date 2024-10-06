@@ -10,16 +10,18 @@ public class ChatroomModel {
     private List<String> userIds;
     private Timestamp lastMessageTimestamp;
     private String lastMessageSenderId;
+    private String lastMessage;
     private String GroupName; //TODO for future implementation of groupchats
 
     public ChatroomModel() {
     }
 
-    public ChatroomModel(String chatroomId, List<String> userIds, Timestamp lastMessageTimestamp, String lastMessageSenderId) {
+    public ChatroomModel(String chatroomId, List<String> userIds, Timestamp lastMessageTimestamp, String lastMessageSenderId, String lastMessage) {
         this.chatroomId = chatroomId;
         this.userIds = userIds;
         this.lastMessageTimestamp = lastMessageTimestamp;
         this.lastMessageSenderId = lastMessageSenderId;
+        this.lastMessage = lastMessage;
     }
 
     public String getChatroomId() {
@@ -52,5 +54,13 @@ public class ChatroomModel {
 
     public void setLastMessageSenderId(String lastMessageSenderId) {
         this.lastMessageSenderId = lastMessageSenderId;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
     }
 }

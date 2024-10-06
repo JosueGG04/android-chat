@@ -11,22 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
-        android:padding="10dp"
+        android:padding="4dp"
         android:id="@+id/home_toolbar">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/home_buttons">
             <ImageButton
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:src="@drawable/icon_menu"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 app:tint="@color/white"
                 android:id="@+id/home_options_menu_btn"/>
             <ImageButton
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:src="@drawable/icon_new_chat"
                 android:layout_alignParentEnd="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -52,7 +52,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/home_toolbar"/>
+        android:layout_below="@id/home_toolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/home_page_recycler"/>
+    </FrameLayout>
     
 
 

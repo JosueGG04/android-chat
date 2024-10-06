@@ -53,7 +53,6 @@ public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageMod
         Date date = model.getTimestamp().toDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         String formattedTime = sdf.format(date);
-        Log.d("formattedTime",formattedTime);
         holder.messageTimestamp.setText(formattedTime);
         //message
         holder.messageText.setText(model.getMessage());
