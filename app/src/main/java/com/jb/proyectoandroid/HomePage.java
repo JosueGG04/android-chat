@@ -36,7 +36,7 @@ public class HomePage extends AppCompatActivity {
         newChatButton = findViewById(R.id.new_chat_btn);
 
         newChatButton.setOnClickListener((v)->{
-            startActivity(new Intent(HomePage.this,NewChatSearchActivity.class));
+            startActivity(new Intent(HomePage.this,NewChatSearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
         });
         menuButton = findViewById(R.id.home_options_menu_btn);
         menuButton.setOnClickListener(new View.OnClickListener() {
