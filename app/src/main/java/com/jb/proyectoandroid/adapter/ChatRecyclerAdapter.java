@@ -58,7 +58,7 @@ public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageMod
         //message
         holder.messageText.setText(model.getMessage());
         //image
-        if(model.getImagePath()!=null) {
+        if(model.getImagePath()!=null && !model.getImagePath().isEmpty()) {
             holder.imageVw.setVisibility(View.VISIBLE);
             Glide.with(context).load(model.getImagePath()).into(holder.imageVw);
         }
