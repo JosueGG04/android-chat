@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp">
+        <ImageView
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/circular_bg"
+            android:src="@drawable/icon_person"
+            android:padding="4dp"
+            app:tint="@color/white"
+            android:backgroundTint="@color/light_gray"
+            android:layout_centerInParent="true"
+            android:id="@+id/chat_pic_image_view"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:minHeight="20dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/off_white"
+        android:padding="10dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="4dp"
+            android:id="@+id/homepage_email_timestamp_row">
+            <TextView
+                android:text="email@email.com"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/chatroom_email"/>
+            <TextView
+                android:text="20:20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_gray"
+                android:id="@+id/chatroom_timestamp"
+                android:paddingStart="16dp"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <TextView
+            android:text="Texto largo que será cortado si es demasiado extenso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/chat_last_message_text"
+            android:layout_below="@id/homepage_email_timestamp_row"
+            android:maxLines="1"
+            android:ellipsize="end" />
+    </RelativeLayout>
+</LinearLayout>

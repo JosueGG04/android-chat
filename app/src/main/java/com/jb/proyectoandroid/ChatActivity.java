@@ -155,15 +155,17 @@ public class ChatActivity extends AppCompatActivity {
     void sendMessageToUser(String message, boolean isImage){
         chatroomModel.setLastMessageTimestamp(Timestamp.now());
         chatroomModel.setLastMessageSenderId(FirebaseUtil.currentUserId());
-        FirebaseUtil.getChatroomReference(chatroomId).set(chatroomModel);
         ChatMessageModel chatMessageModel;
         if (!isImage){
             chatMessageModel = new ChatMessageModel(message,"", FirebaseUtil.currentUserId(),Timestamp.now());
             messageInput.setText("");
+            chatroomModel.setLastMessage(message);
         }
         else{
             chatMessageModel = new ChatMessageModel("",message, FirebaseUtil.currentUserId(),Timestamp.now());
+            chatroomModel.setLastMessage("imagen");
         }
+        FirebaseUtil.getChatroomReference(chatroomId).set(chatroomModel);
 
         FirebaseUtil.getChatroomMessageReference(chatroomId).add(chatMessageModel)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -247,6 +249,7 @@ public class ChatActivity extends AppCompatActivity {
                             chatroomId,
                             Arrays.asList(FirebaseUtil.currentUserId(),otherUser.getUserID()),
                             Timestamp.now(),
+                            "",
                             "");
                 }
                 FirebaseUtil.getChatroomReference(chatroomId).set(chatroomModel);

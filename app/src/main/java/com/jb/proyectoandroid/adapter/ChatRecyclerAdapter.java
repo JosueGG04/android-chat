@@ -53,12 +53,11 @@ public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageMod
         Date date = model.getTimestamp().toDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         String formattedTime = sdf.format(date);
-        Log.d("formattedTime",formattedTime);
         holder.messageTimestamp.setText(formattedTime);
         //message
         holder.messageText.setText(model.getMessage());
         //image
-        if(model.getImagePath()!=null) {
+        if(model.getImagePath()!=null && !model.getImagePath().isEmpty()) {
             holder.imageVw.setVisibility(View.VISIBLE);
             Glide.with(context).load(model.getImagePath()).into(holder.imageVw);
         }
