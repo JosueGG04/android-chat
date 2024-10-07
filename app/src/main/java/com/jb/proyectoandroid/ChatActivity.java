@@ -1,14 +1,10 @@
 package com.jb.proyectoandroid;
 
-import static android.util.StatsLog.logEvent;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,7 +89,7 @@ public class ChatActivity extends AppCompatActivity {
             String message = messageInput.getText().toString().trim();
             if(message.isEmpty())
                 return;
-            sendMessageToUser(message, 0);
+            sendMessageToUser(message, false);
         }));
         
         getOrCreateChatroomModel();
@@ -136,7 +132,7 @@ public class ChatActivity extends AppCompatActivity {
                                             task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(task1 -> {
                                                 if(task1.isSuccessful()){
                                                     String imageUrl = task1.getResult().toString();
-                                                    sendMessageToUser(imageUrl, 1);
+                                                    sendMessageToUser(imageUrl, true);
                                                 }
                                             });
                                         }
