@@ -18,6 +18,9 @@ public class FirebaseUtil {
     public static DocumentReference getUserReference(String userId){
         return FirebaseFirestore.getInstance().collection("users").document(userId);
     }
+    public static DocumentReference currentUserDetails(){
+        return FirebaseFirestore.getInstance().collection("users").document(currentUserId());
+    }
 
     public static CollectionReference allUserCollectionReference(){
         return FirebaseFirestore.getInstance().collection("users");
