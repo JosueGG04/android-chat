@@ -17,14 +17,12 @@
             android:layout_marginBottom="4dp"
             android:id="@+id/email_timestamp_row">
             <TextView
-                android:text="Aiuda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:id="@+id/message_email"/>
             <TextView
-                android:text="Klk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/dark_gray"
@@ -34,7 +32,6 @@
         </RelativeLayout>
 
         <TextView
-            android:text="Hola"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/message_text"
