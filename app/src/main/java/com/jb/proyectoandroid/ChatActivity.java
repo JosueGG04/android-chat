@@ -3,6 +3,7 @@ package com.jb.proyectoandroid;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,7 +22,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -186,25 +186,21 @@ public class ChatActivity extends AppCompatActivity {
         FirebaseUtil.currentUserDetails().get().addOnSuccessListener(documentSnapshot -> {
             UserModel currentUser = documentSnapshot.toObject(UserModel.class);
             if (currentUser != null) {
-                String msg;
-                if(isImage){
-                    msg = "\uD83D\uDDBC\uFE0F Image";
-                }
-                else{
-                    msg = message;
-                }
                 String json = "{\n" +
                         "  \"message\": {\n" +
                         "    \"token\": \"" + receiverToken + "\",\n" +
                         "    \"notification\": {\n" +
                         "      \"title\": \"" + currentUser.getEmail() + "\",\n" +
-                        "      \"body\": \"" + msg + "\"\n" +
+                        (isImage ?
+                        "      \"image\": \"" + message + "\"\n" :
+                                "      \"body\": \"" + message + "\"\n") +
                         "    },\n" +
                         "    \"data\": {\n" +
-                        "      \"openChatId\": \"" + chatroomId + "\"\n" +
+                        "      \"chatroom\": \"" + chatroomId + "\"\n" +
                         "    }\n" +
                         "  }\n" +
                         "}";
+
                 callApi(json);
             }
         });
@@ -214,7 +210,7 @@ public class ChatActivity extends AppCompatActivity {
         Thread thread = new Thread(() -> {
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             OkHttpClient client = new OkHttpClient();
-            String url = "https://fcm.googleapis.com/v1/projects/android-chat/messages:send";
+            String url = "https://fcm.googleapis.com/v1/projects/android-chat-b6e3f/messages:send";
             RequestBody body = RequestBody.create(JSON, json);
             Request req;
             try {
