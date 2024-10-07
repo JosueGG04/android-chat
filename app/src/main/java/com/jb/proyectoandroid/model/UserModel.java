@@ -3,6 +3,7 @@ package com.jb.proyectoandroid.model;
 public class UserModel {
     private String email;
     private String userID;
+    private String fcmToken;
 
     public UserModel(){
 
@@ -25,7 +26,17 @@ public class UserModel {
         return userID;
     }
 
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
     public void setUserID(String userID) {
         this.userID = userID;
     }
+
+
 }
