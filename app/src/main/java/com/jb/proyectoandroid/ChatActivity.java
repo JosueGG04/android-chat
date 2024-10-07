@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
@@ -26,21 +27,24 @@ import com.jb.proyectoandroid.model.ChatroomModel;
 import com.jb.proyectoandroid.model.UserModel;
 import com.jb.proyectoandroid.utils.AndroidUtil;
 import com.jb.proyectoandroid.utils.FirebaseUtil;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 public class ChatActivity extends AppCompatActivity {
     String chatroomId;
-
     UserModel otherUser;
     ChatroomModel chatroomModel;
-
     ImageButton sendMessageBtn;
     ImageButton backBtn;
     TextView otherEmail;
     RecyclerView recyclerView;
     EditText messageInput;
-
     ChatRecyclerAdapter adapter;
 
     @Override
@@ -109,11 +113,78 @@ public class ChatActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
-                        messageInput.setText("");
+                        if(task.isSuccessful()) {
+                            messageInput.setText("");
+                            sendNotification(message, false);
+                        }
                     }
                 });
     }
 
+    void sendNotification(String message, boolean isImage){
+        String receiverToken = otherUser.getFcmToken();
+        getJsonString(message,receiverToken,isImage);
+    }
+
+    private void getJsonString(String message, String receiverToken, boolean isImage) {
+        FirebaseUtil.currentUserDetails().get().addOnSuccessListener(documentSnapshot -> {
+            UserModel currentUser = documentSnapshot.toObject(UserModel.class);
+            if (currentUser != null) {
+                String msg;
+                if(isImage){
+                    msg = "\uD83D\uDDBC\uFE0F Image";
+                }
+                else{
+                    msg = message;
+                }
+                String json = "{\n" +
+                        "  \"message\": {\n" +
+                        "    \"token\": \"" + receiverToken + "\",\n" +
+                        "    \"notification\": {\n" +
+                        "      \"title\": \"" + currentUser.getEmail() + "\",\n" +
+                        "      \"body\": \"" + msg + "\"\n" +
+                        "    },\n" +
+                        "    \"data\": {\n" +
+                        "      \"openChatId\": \"" + chatroomId + "\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}";
+                callApi(json);
+            }
+        });
+    }
+
+    private void callApi(String json) {
+        Thread thread = new Thread(() -> {
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            OkHttpClient client = new OkHttpClient();
+            String url = "https://fcm.googleapis.com/v1/projects/android-chat/messages:send";
+            RequestBody body = RequestBody.create(JSON, json);
+            Request req;
+            try {
+                req = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .addHeader("Authorization", "Bearer " + getAccessToken())
+                        .addHeader("Content-Type", "application/json; UTF-8")
+                        .build();
+                client.newCall(req).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+    }
+
+    public String getAccessToken() throws IOException {
+        final String[] SCOPES = { "https://www.googleapis.com/auth/firebase.messaging" };
+        InputStream serviceAccountStream = ChatActivity.class.getClassLoader().getResourceAsStream("android-chat-service-account.json");
+        GoogleCredentials googleCredentials = GoogleCredentials
+                .fromStream(serviceAccountStream)
+                .createScoped(Arrays.asList(SCOPES));
+        googleCredentials.refreshIfExpired();
+        return googleCredentials.getAccessToken().getTokenValue();
+    }
     void getOrCreateChatroomModel(){
         FirebaseUtil.getChatroomReference(chatroomId).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
