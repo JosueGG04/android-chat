@@ -73,7 +73,7 @@ public class LoadingActivity extends AppCompatActivity {
                     if(FirebaseUtil.isLoggedIn()){
                         startActivity(new Intent(LoadingActivity.this,HomePage.class));
                     } else{
-                        startActivity(new Intent(LoadingActivity.this,MainActivity.class));
+                        startActivity(new Intent(LoadingActivity.this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                     }
                 }
             }, 1000);

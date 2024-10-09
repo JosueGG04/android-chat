@@ -1,6 +1,5 @@
 package com.jb.proyectoandroid;
 
-import static java.security.AccessController.getContext;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -101,7 +100,7 @@ public class HomePage extends AppCompatActivity {
 
         FirestoreRecyclerOptions<ChatroomModel> options = new FirestoreRecyclerOptions.Builder<ChatroomModel>()
                 .setQuery(query, ChatroomModel.class).build();
-        adapter = new HomePageRecyclerAdapter(options,getApplicationContext());
+        adapter = new HomePageRecyclerAdapter(options,this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
