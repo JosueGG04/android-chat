@@ -36,14 +36,12 @@
             android:layout_marginBottom="4dp"
             android:id="@+id/homepage_email_timestamp_row">
             <TextView
-                android:text="email@email.com"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:id="@+id/chatroom_email"/>
             <TextView
-                android:text="20:20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/dark_gray"
@@ -53,7 +51,6 @@
         </RelativeLayout>
 
         <TextView
-            android:text="Texto largo que será cortado si es demasiado extenso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/chat_last_message_text"

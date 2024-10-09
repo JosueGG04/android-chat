@@ -97,7 +97,7 @@ public class HomePage extends AppCompatActivity {
     }
 
     void setupChatRecyclerView(){
-        Query query = FirebaseUtil.allChatroomsCollectionReference().whereArrayContains("userIds", FirebaseUtil.currentUserId()).orderBy("lastMessageTimestamp", Query.Direction.DESCENDING);
+        Query query = FirebaseUtil.allChatroomsCollectionReference().orderBy("lastMessageTimestamp", Query.Direction.DESCENDING).whereArrayContains("userIds", FirebaseUtil.currentUserId());
 
         FirestoreRecyclerOptions<ChatroomModel> options = new FirestoreRecyclerOptions.Builder<ChatroomModel>()
                 .setQuery(query, ChatroomModel.class).build();
