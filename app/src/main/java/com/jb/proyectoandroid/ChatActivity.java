@@ -3,7 +3,6 @@ package com.jb.proyectoandroid;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -89,7 +88,7 @@ public class ChatActivity extends AppCompatActivity {
             String message = messageInput.getText().toString().trim();
             if(message.isEmpty())
                 return;
-            sendMessageToUser(message, false);
+            sendMessage(message, false);
         }));
         
         getOrCreateChatroomModel();
@@ -132,7 +131,7 @@ public class ChatActivity extends AppCompatActivity {
                                             task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(task1 -> {
                                                 if(task1.isSuccessful()){
                                                     String imageUrl = task1.getResult().toString();
-                                                    sendMessageToUser(imageUrl, true);
+                                                    sendMessage(imageUrl, true);
                                                 }
                                             });
                                         }
@@ -152,7 +151,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    void sendMessageToUser(String message, boolean isImage){
+    void sendMessage(String message, boolean isImage){
         chatroomModel.setLastMessageTimestamp(Timestamp.now());
         chatroomModel.setLastMessageSenderId(FirebaseUtil.currentUserId());
         ChatMessageModel chatMessageModel;
